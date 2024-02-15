@@ -21,8 +21,17 @@
                 epost: document.getElementById("Epost").value
             };
 
+            if (!isValidEmail(billett.epost)) {
+                alert("Vennligst skriv inn en gyldig e-postadresse.");
+                return;
+            }
+
             billetter.push(billett);
             oppdaterTabell();
+
+        }
+        function isValidEmail(email) {
+            return /^[a-zA-Z0-9._%+-]+@epost\.com$/.test(email);
         }
 
         function oppdaterTabell() {
