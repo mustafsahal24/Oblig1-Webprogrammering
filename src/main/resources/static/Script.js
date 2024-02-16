@@ -1,42 +1,48 @@
 
-    let billetter = [];
+const ticketForm = document.getElementById('ticketForm');
+const ticketList = document.getElementById('ticketList');
+const deleteAllButton = document.getElementById('deleteAll');
+let tickets = [];
 
-    function kjopticket() {
-    const billett = {
-    film: document.getElementById("filmer").value,
-    antall: document.getElementById("Antall").value,
-    fornavn: document.getElementById("Fornavn").value,
-    etternavn: document.getElementById("Etternavn").value,
-    telefonnr: document.getElementById("TelefonNr").value,
-    epost: document.getElementById("Epost").value
-};
+ticketForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    if (!isValidEmail(billett.epost)) {
-    alert("Vennligst skriv inn en gyldig e-postadresse.");
-    return;
+    const movieInput = document.getElementById('filmer').value;
+    const nameInput = document.getElementById('name').value;
+    const surnameInput = document.getElementById('surname').value;
+    const emailInput = document.getElementById('email').value;
+    const phoneInput = document.getElementById('phone').value;
+    const quantityInput = document.getElementById('quantity').value;
+
+    if (movieInput && nameInput && surnameInput && emailInput && phoneInput && quantityInput > 0) {
+        const ticket = {
+            movie: movieInput,
+            name: nameInput,
+            surname: surnameInput,
+            email: emailInput,
+            phone: phoneInput,
+            quantity: quantityInput
+        };
+
+        tickets.push(ticket);
+        displayTickets();
+        ticketForm.reset();
+    } else {
+        alert('Vennligst fyll ut alle feltene korrekt.');
+    }
+});
+
+deleteAllButton.addEventListener('click', function() {
+    tickets = [];
+    displayTickets();
+});
+
+function displayTickets() {
+    ticketList.innerHTML = '';
+    tickets.forEach(function (ticket) {
+        const li = document.createElement('li');
+        li.textContent = `Film: ${ticket.movie}, Navn: ${ticket.name} ${ticket.surname}, E-post: ${ticket.email}, Telefon: ${ticket.phone}, Antall billetter: ${ticket.quantity}`;
+        ticketList.appendChild(li);
+    });
+
 }
-
-    billetter.push(billett);
-    oppdaterTabell();
-
-}
-    function isValidEmail(email) {
-    return /^[a-zA-Z0-9._%+-]/.test(email);
-}
-
-    function oppdaterTabell() {
-    let ut = "<table><tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnummer</th><th>Epost</th></tr>";
-
-    for (let i = 0; i < billetter.length; i++) {
-    ut += "<tr><td>" + billetter[i].film + "</td><td>" + billetter[i].antall + "</td><td>" + billetter[i].fornavn + "</td><td>" + billetter[i].etternavn + "</td><td>" + billetter[i].telefonnr + "</td><td>" + billetter[i].epost + "</td></tr>";
-}
-
-    ut += "</table>";
-    document.getElementById("ut").innerHTML = ut;
-}
-
-    function AltDelete() {
-    billetter = [];
-    oppdaterTabell();
-}
-
