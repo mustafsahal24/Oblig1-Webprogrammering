@@ -1,6 +1,6 @@
-
 const ticketForm = document.getElementById('ticketForm');
 const ticketList = document.getElementById('ticketList');
+const printTable = document.getElementById('print');
 const deleteAllButton = document.getElementById('deleteAll');
 let tickets = [];
 
@@ -39,10 +39,21 @@ deleteAllButton.addEventListener('click', function() {
 
 function displayTickets() {
     ticketList.innerHTML = '';
-    tickets.forEach(function (ticket) {
-        const li = document.createElement('li');
-        li.textContent = `Film: ${ticket.movie}, Navn: ${ticket.name} ${ticket.surname}, E-post: ${ticket.email}, Telefon: ${ticket.phone}, Antall billetter: ${ticket.quantity}`;
-        ticketList.appendChild(li);
-    });
+    // Clear table rows except the header row
+    while (printTable.rows.length > 1) {
+        printTable.deleteRow(1);
+    }
 
+    // Add tickets to the table
+    tickets.forEach(function(ticket) {
+        const newRow = printTable.insertRow(-1);
+        newRow.innerHTML = `
+            <td>${ticket.movie}</td>
+            <td>${ticket.quantity}</td>
+            <td>${ticket.name}</td>
+            <td>${ticket.surname}</td>
+            <td>${ticket.phone}</td>
+            <td>${ticket.email}</td>
+        `;
+    });
 }
