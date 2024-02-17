@@ -8,54 +8,10 @@
         input { display: table-cell; }
 
     </style>
-    <script>
-        let billetter = [];
-
-        function kjopticket() {
-            const billett = {
-                film: document.getElementById("filmer").value,
-                antall: document.getElementById("Antall").value,
-                fornavn: document.getElementById("Fornavn").value,
-                etternavn: document.getElementById("Etternavn").value,
-                telefonnr: document.getElementById("TelefonNr").value,
-                epost: document.getElementById("Epost").value
-            };
-
-            if (!isValidEmail(billett.epost)) {
-                alert("Vennligst skriv inn en gyldig e-postadresse.");
-                return;
-            }
-
-            billetter.push(billett);
-            oppdaterTabell();
-
-        }
-        function isValidEmail(email) {
-            return /^[a-zA-Z0-9._%+-]+@epost\.com$/.test(email);
-        }
-
-        function oppdaterTabell() {
-            let ut = "<table><tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnummer</th><th>Epost</th></tr>";
-
-            for (let i = 0; i < billetter.length; i++) {
-                ut += "<tr><td>" + billetter[i].film + "</td><td>" + billetter[i].antall + "</td><td>" + billetter[i].fornavn + "</td><td>" + billetter[i].etternavn + "</td><td>" + billetter[i].telefonnr + "</td><td>" + billetter[i].epost + "</td></tr>";
-            }
-
-            ut += "</table>";
-            document.getElementById("ut").innerHTML = ut;
-        }
-
-        function AltDelete() {
-            billetter = [];
-            oppdaterTabell();
-        }
-    </script>
-
-
 </head>
 <body>
 <h1 class="h1 text-center">Bestilling av kino billetter</h1>
-<form action="#">
+<form id="ticketForm">
     <label for="filmer">Velg film:</label>
     <select id="filmer" class="form-select" aria-label="Standard select eksempel">
         <option value="blank"></option>
@@ -65,22 +21,34 @@
         <option value="Sinister">Sinister</option>
     </select>
     <br>
-    <label for="Antall">Antall:</label><input id="Antall" class="form-control" type="number">
-    <p id="AntallError"></p><br>
-    <label for="Fornavn">Fornavn:</label><input id="Fornavn" class="form-control" type="text">
-    <p id="FornavnError"></p><br>
-    <label for="Etternavn">Etternavn:</label><input id="Etternavn" class="form-control" type="text">
-    <p id="EtternavnError"></p> <br>
-    <label for="TelefonNr">Telefon:</label><input id="TelefonNr" class="form-control" type="number">
-    <p id="TelefonNrError"></p><br>
-    <label for="Epost">Epost:</label><input id="Epost" class="form-control" type="text">
-    <p id="EpostError"></p> <br>
-    <input type="button" class="form-control" value="Kjøp billett" onclick="kjopticket()">
+    <label for="quantity">Antall:</label><input id="quantity" class="form-control" type="number">
+    <br>
+    <label for="name">Fornavn:</label><input id="name" class="form-control" type="text">
+    <br>
+    <label for="surname">Etternavn:</label><input id="surname" class="form-control" type="text">
+    <br>
+    <label for="phone">Telefon:</label>
+    <input type="tel" id="phone" pattern="[0-9]{8}" required><br><br>
+    <br>
+    <label for="email">Epost:</label><input id="email" class="form-control" type="email">
+    <br>
+    <input type="submit" class="form-contfilrol" value="Kjøp billett">
 </form>
 <h1 class="h1 text-center">Alle billetter</h1>
-<div id="ut"></div>
-<button onclick="AltDelete()" type="button" class="btn btn-primary">Slett billetter</button>
+<ul id="ticketList"></ul>
+<table id="print">
+    <tr>
+        <th>Film</th>
+        <th>Antall</th>
+        <th>Fornavn</th>
+        <th>Etternavn</th>
+        <th>Telefonnr</th>
+        <th>Epost</th>
+    </tr>
+</table>
+<button id="deleteAll" type="button" class="btn btn-primary">Slett billetter</button>
 
+<script src="Script.js"></script>
 </body>
 </html>
 
