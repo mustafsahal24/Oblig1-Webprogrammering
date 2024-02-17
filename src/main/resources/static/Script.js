@@ -1,3 +1,5 @@
+
+
 const ticketForm = document.getElementById('ticketForm');
 const ticketList = document.getElementById('ticketList');
 const printTable = document.getElementById('print');
