@@ -16,7 +16,52 @@ ticketForm.addEventListener('submit', function(event) {
     const phoneInput = document.getElementById('phone').value;
     const quantityInput = document.getElementById('quantity').value;
 
-    if (movieInput && nameInput && surnameInput && emailInput && phoneInput && quantityInput > 0) {
+    const errorFilmer = document.getElementById("errorFilmer");
+    const antError = document.getElementById("antError");
+    const fornavnError = document.getElementById("fornavnError");
+    const etternavnError = document.getElementById("EtternavnError");
+    const telError = document.getElementById("telError");
+    const epostError = document.getElementById("epostError");
+    let validInput=true;
+
+    if (movieInput === "blank" || movieInput.trim() === "") {
+        errorFilmer.innerHTML = 'Vennligst velg en film.';
+        validInput = false;
+    } else {
+        errorFilmer.innerHTML = '';
+    }
+
+    if (!quantityInput || quantityInput <= 0) {
+        antError.innerHTML = 'Vennligst velg en gyldig mengde billetter.';
+    } else {
+        antError.innerHTML = '';
+    }
+
+    if (!nameInput) {
+        fornavnError.innerHTML = 'Vennligst fyll ut navn.';
+    } else {
+        fornavnError.innerHTML = '';
+    }
+
+    if (!surnameInput) {
+        etternavnError.innerHTML = 'Vennligst fyll ut etternavn.';
+    } else {
+        etternavnError.innerHTML = '';
+    }
+
+    if (!phoneInput) {
+        telError.innerHTML = 'Vennligst fyll ut telefonnummer.';
+    } else {
+        telError.innerHTML = '';
+    }
+
+    if (!emailInput) {
+        epostError.innerHTML = 'Vennligst fyll ut e-postadresse.';
+    } else {
+        epostError.innerHTML = '';
+    }
+
+    if (validInput && movieInput && nameInput && surnameInput && emailInput && phoneInput && quantityInput > 0) {
         const ticket = {
             movie: movieInput,
             name: nameInput,
@@ -29,8 +74,6 @@ ticketForm.addEventListener('submit', function(event) {
         tickets.push(ticket);
         displayTickets();
         ticketForm.reset();
-    } else {
-        alert('Vennligst fyll ut alle feltene korrekt.');
     }
 });
 
